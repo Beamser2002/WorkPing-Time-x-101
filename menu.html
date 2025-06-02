@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>เมนูเลือก</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h2>👋 ยินดีต้อนรับ</h2>
+  <p id="uid"></p>
+  <button onclick="goCheckIn()">🕘 เข้างาน</button>
+  <button onclick="goCheckOut()">⏹️ ออกงาน</button>
+
+  <script>
+    const userId = localStorage.getItem('userId');
+    if (!userId) location.href = "index.html";
+    document.getElementById('uid').innerText = "คุณเข้าสู่ระบบด้วย ID: " + userId;
+
+    function goCheckIn() {
+      window.location.href = "checkin.html";
+    }
+
+    function goCheckOut() {
+      fetch("<<SCRIPT_URL>>", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: userId,
+          type: "ออกงาน"
+        })
+      }).then(res => res.text())
+        .then(() => window.location.href = "success.html?type=checkout");
+    }
+  </script>
+</body>
+</html>
