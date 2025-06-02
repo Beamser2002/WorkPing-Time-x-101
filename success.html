@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>สำเร็จ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h2 id="msg">✅ เสร็จสิ้น</h2>
+  <button onclick="back()">🔙 กลับเมนู</button>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const type = params.get("type");
+    if (type === "checkin") {
+      document.getElementById("msg").innerText = "✅ เข้างานเรียบร้อยแล้ว";
+    } else if (type === "checkout") {
+      document.getElementById("msg").innerText = "⏹️ ออกงานเรียบร้อยแล้ว";
+    }
+    function back() {
+      window.location.href = "menu.html";
+    }
+  </script>
+</body>
+</html>
