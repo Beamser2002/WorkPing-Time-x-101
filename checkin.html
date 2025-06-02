@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>เข้างาน</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h2>🕘 เข้างาน</h2>
+  <label>เลือกเวลากะ:</label>
+  <select id="shiftTime">
+    <option value="10:00">10:00</option>
+    <option value="11:00">11:00</option>
+    <option value="15:30">15:30</option>
+  </select><br>
+
+  <video id="video" autoplay playsinline></video>
+  <canvas id="canvas" style="display:none;"></canvas><br>
+  <button onclick="capture()">📸 ถ่ายรูป</button>
+  <button onclick="submit()">✅ ส่งเข้างาน</button>
+  <div id="status"></div>
+
+  <script>
+    let imageBase64, latitude, longitude;
+    const video = document.getElementById('video');
+    navigator.mediaDevices.getUserMedia({ video: true }).then(s => video.srcObject = s);
+    navigator.geolocation.getCurrentPosition(pos => {
+      latitude = pos.coords.latitude;
+      longitude = pos.coords.longitude;
+    }, () => alert("⚠️ เปิด GPS ด้วยนะ"));
+
+    function capture() {
+      const canvas = document.getElementById('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      imageBase64 = canvas.toDataURL('image/jpeg').split(',')[1];
+      document.getElementById('status').innerText = "📸 ถ่ายรูปแล้ว";
+    }
+
+    function submit() {
+      const shiftTime = document.getElementById('shiftTime').value;
+      const userId = localStorage.getItem('userId');
+      if (!imageBase64 || !latitude || !userId) return alert("❌ ถ่ายรูป + เปิด GPS + Login ก่อน");
+
+      fetch("<<SCRIPT_URL>>", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId, imageBase64, latitude, longitude, type: "เข้างาน", selectedTime: shiftTime
+        })
+      }).then(res => res.text())
+        .then(() => window.location.href = "success.html?type=checkin");
+    }
+  </script>
+</body>
+</html>
