@@ -20,7 +20,7 @@
       const userId = document.getElementById("userId").value.trim();
       const password = document.getElementById("password").value.trim();
       const remember = document.getElementById("remember").checked;
-      fetch("SCRIPT_URL", {
+      fetch("https://script.google.com/macros/s/AKfycbyiC2TePiQXqpm6tPdti4jtJQALptAvrFNqRkfz2i3DoHBF4oj8Ww24m78QgBDyfQgd/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "login", userId, password })
