@@ -19,7 +19,7 @@
     function goCheckout() {
       const userId = localStorage.getItem("userId");
       if (!userId) return alert("ไม่พบรหัสผู้ใช้งาน");
-      fetch("https://script.google.com/macros/s/AKfycbyiC2TePiQXqpm6tPdti4jtJQALptAvrFNqRkfz2i3DoHBF4oj8Ww24m78QgBDyfQgd/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyvi1HTFeKI1TiLCQbmMxuJZ3BuQXINyWe7ARYV4kLwp9RYmOFANnosQia-32hegv2F/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mode: "checkout", codeId: userId, latitude: 0, longitude: 0, imageBase64: "", type: "ออกงาน" })
