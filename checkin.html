@@ -43,7 +43,7 @@
       const userId = localStorage.getItem('userId');
       if (!imageBase64 || !latitude || !userId) return alert("❌ ถ่ายรูป + เปิด GPS + Login ก่อน");
 
-      fetch("https://script.google.com/macros/s/AKfycbxzcj5jSdP4fPnEAcy8IGrjaaXlUgHM9g0eXwxloeQN_t-1JuSJavk3HRcxWf0kR3BA/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwLi2r1daRrY-FDQYbrs_Xxq-PAUpMVQ7PXYc0ixrJeGDdXgd0cC-UU83e9FqT-uVzi/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
