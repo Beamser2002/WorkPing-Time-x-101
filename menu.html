@@ -1,34 +1,32 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <title>เมนูเลือก</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>📋 เมนู</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 80px; }
+    button { padding: 15px 30px; font-size: 18px; margin: 15px; border-radius: 8px; border: none; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <h2>👋 ยินดีต้อนรับ</h2>
-  <p id="uid"></p>
-  <button onclick="goCheckIn()">🕘 เข้างาน</button>
-  <button onclick="goCheckOut()">⏹️ ออกงาน</button>
+  <h2>📋 เมนูหลัก</h2>
+  <button onclick="goCheckin()">🕘 เข้างาน</button>
+  <button onclick="goCheckout()">🕔 ออกงาน</button>
 
   <script>
-    const userId = localStorage.getItem('userId');
-    if (!userId) location.href = "index.html";
-    document.getElementById('uid').innerText = "คุณเข้าสู่ระบบด้วย ID: " + userId;
-
-    function goCheckIn() {
+    function goCheckin() {
       window.location.href = "checkin.html";
     }
-
-    function goCheckOut() {
-      fetch("https://script.google.com/macros/s/AKfycbyiC2TePiQXqpm6tPdti4jtJQALptAvrFNqRkfz2i3DoHBF4oj8Ww24m78QgBDyfQgd/exec", {
+    function goCheckout() {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return alert("ไม่พบรหัสผู้ใช้งาน");
+      fetch("SCRIPT_URL", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: userId,
-          type: "ออกงาน"
-        })
-      }).then(res => res.text())
-        .then(() => window.location.href = "success.html?type=checkout");
+        body: JSON.stringify({ mode: "checkout", codeId: userId, latitude: 0, longitude: 0, imageBase64: "", type: "ออกงาน" })
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg))
+      .catch(err => alert("❌ Error: " + err));
     }
   </script>
 </body>
